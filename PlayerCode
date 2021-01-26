@@ -1,0 +1,32 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerMoveMent : MonoBehaviour
+{
+    [SerializeField] Rigidbody2D rigidbody2D;
+    [SerializeField] private float speed;
+    Vector2 move;
+    Vector2 mouse;
+    Camera camera;
+    // Start is called before the first frame update
+    void Start()
+    {
+        camera = Camera.main;
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        mouse = camera.ScreenToWorldPoint(Input.mousePosition);
+    }
+    private void FixedUpdate()
+    {
+        rigidbody2D.MovePosition(rigidbody2D.position + move * speed * Time.deltaTime);
+        Vector2 looking = mouse - rigidbody2D.position;
+        float angle = Mathf.Atan2(looking.y, looking.x) * Mathf.Rad2Deg - 90;
+        rigidbody2D.rotation = angle;
+    }
+}
