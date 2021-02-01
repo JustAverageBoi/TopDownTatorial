@@ -1,0 +1,21 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Fire : MonoBehaviour
+{
+    [SerializeField] GameObject bulletGameObject;
+    [SerializeField] Transform firepoint;
+    [SerializeField] float power;
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GameObject bullet = Instantiate(bulletGameObject, firepoint.transform.position, firepoint.transform.rotation);
+            Rigidbody2D bulletrigidbody = bullet.GetComponent<Rigidbody2D>();
+            bulletrigidbody.AddForce(firepoint.up * power, ForceMode2D.Impulse);
+        }
+    }
+}
